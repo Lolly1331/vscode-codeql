@@ -334,7 +334,11 @@ async function runRemoteQueriesApiRequest(
     void showAndLogInformationMessage(popupMessage, { fullMessage: logMessage });
     return response.data.workflow_run_id;
   } catch (error) {
-    void showAndLogErrorMessage(getErrorMessage(error));
+    if ((error as any).status === 404) {
+      void showAndLogErrorMessage("An error has occurred!");
+    } else {
+      void showAndLogErrorMessage(getErrorMessage(error));
+    }
   }
 }
 
